@@ -1,8 +1,8 @@
 import faker from 'faker';
 import Promise from 'promise';
 
-const TIMEOUT = 2000;
-const COUNT_OF_USERS = 100;
+const TIMEOUT = 20;
+const COUNT_OF_USERS = 3000;
 
 export const fetchUsers = () => {
   return new Promise((resolve) => {

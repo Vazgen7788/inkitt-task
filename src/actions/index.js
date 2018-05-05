@@ -20,3 +20,13 @@ export const getUsersAutocomplete = query => (dispatch, getState) => {
   });
 };
 
+export const markUsersNextAutocomplete = (usersAutocomplete) => ({
+  type: types.MARK_USERS_NEXT_AUTOCOMPLETE,
+  usersAutocomplete
+});
+
+export const markUsersPrevAutocomplete = (usersAutocomplete) => ({
+  type: types.MARK_USERS_PREV_AUTOCOMPLETE,
+  usersAutocomplete
+});
+

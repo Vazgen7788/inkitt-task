@@ -6,7 +6,7 @@ const SearchInputDropdown = ({ items, recent }) => (
     {recent && <ListGroupItem className="recent-searches-note">Recent Searches</ListGroupItem>}
     {items.map((item, index) => {
       return (
-          <ListGroupItem key={index}>{item}</ListGroupItem>
+          <ListGroupItem active={item.active} key={index}>{item.text}</ListGroupItem>
       )
     })}
   </ListGroup>

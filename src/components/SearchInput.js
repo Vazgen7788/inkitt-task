@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, FormGroup, Input, ListGroup, ListGroupItem } from 'reactstrap';
 import SearchInputDropdown from './SearchInputDropdown';
+import * as keyboardCodes from '../constants/KeyboardNavKeyCodes';
 
 class SearchInput extends Component {
 
@@ -11,6 +12,7 @@ class SearchInput extends Component {
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
   handleFocus() {
@@ -34,9 +36,27 @@ class SearchInput extends Component {
     this.props.getAutocomplete(inputValue);
   }
 
+  handleKeyUp({ keyCode }) {
+    const { UP, DOWN, ENTER } = keyboardCodes;
+
+    switch(keyCode) {
+      case UP:
+        this.props.markPrev(this.props.autocomplete);
+        break;
+      case DOWN:
+        this.props.markNext(this.props.autocomplete);
+        break;
+      case ENTER:
+        console.log('enter');
+        break;
+      default:
+    }
+  }
+
   render() {
     const { autocomplete } = this.props;
     const inputEl = this.inputRef.current;
+    const { showRecentSearches } = this.state;
 
     return (
       <Container>
@@ -46,6 +66,7 @@ class SearchInput extends Component {
               <Input
                 onFocus={this.handleFocus}
                 onBlur={this.handleBlur}
+                onKeyUp={this.handleKeyUp}
                 onChange={this.handleChange}
                 innerRef={this.inputRef}
                 type="text"
@@ -54,7 +75,7 @@ class SearchInput extends Component {
               />
 
               {
-                inputEl && inputEl.value.length === 0 &&
+                showRecentSearches && inputEl && inputEl.value.length === 0 &&
                 <ListGroup className="autocomplete-container">
                   <ListGroupItem className="recent-searches-note">Recent Searches</ListGroupItem>
                   <ListGroupItem>Cras justo odio</ListGroupItem>

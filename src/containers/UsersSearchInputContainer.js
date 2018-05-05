@@ -1,7 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import SearchInput from  '../components/SearchInput';
-import { getUsersAutocomplete } from '../actions';
+import {
+  getUsersAutocomplete,
+  markUsersNextAutocomplete,
+  markUsersPrevAutocomplete
+} from '../actions';
 
 const UsersSearchInputContainer = props => <SearchInput {...props} />;
 
@@ -12,5 +16,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  getAutocomplete: getUsersAutocomplete
+  getAutocomplete: getUsersAutocomplete,
+  markNext: markUsersNextAutocomplete,
+  markPrev: markUsersPrevAutocomplete
 })(UsersSearchInputContainer);
