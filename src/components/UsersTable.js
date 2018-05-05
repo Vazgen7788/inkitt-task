@@ -4,7 +4,7 @@ import { Container, Col, Table } from 'reactstrap';
 const UsersTable = ({ users }) => (
   <Container fluid>
     <Col xs="12">
-      <Table hover bordered>
+      <Table className="bg-white" hover bordered responsive>
         <thead>
           <tr>
             <th>#</th>

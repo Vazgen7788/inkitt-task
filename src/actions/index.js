@@ -9,3 +9,14 @@ export const fetchUsers = () => dispatch => {
     });
   });
 };
+
+export const getUsersAutocomplete = query => (dispatch, getState) => {
+  const { users } = getState();
+
+  dispatch({
+    type: types.GET_USERS_AUTOCOMPLETE,
+    query,
+    users
+  });
+};
+

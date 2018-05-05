@@ -7,6 +7,7 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "faker": "^4.1.0",
+    "fuzzy-search": "^2.0.1",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.5",
     "node-sass-chokidar": "^1.2.2",

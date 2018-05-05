@@ -1,13 +1,13 @@
 import React from 'react';
 import '../styles/app.css';
 import Nav from '../components/Nav';
-import SearchInput from '../components/SearchInput';
+import UsersSearchInputContainer from './UsersSearchInputContainer';
 import UsersTableContainer from './UsersTableContainer';
 
 const App = () => (
   <div>
     <Nav />
-    <SearchInput />
+    <UsersSearchInputContainer />
     <UsersTableContainer />
   </div>
 )
