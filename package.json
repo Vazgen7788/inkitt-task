@@ -4,10 +4,12 @@
   "private": false,
   "license": "MIT",
   "description": "Just Task",
+  "homepage": "https://vazgen7788.github.io/inkitt-task",
   "dependencies": {
     "bootstrap": "^4.1.1",
     "faker": "^4.1.0",
     "fuzzy-search": "^2.0.1",
+    "gh-pages": "^1.1.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.5",
     "lodash": "^4.17.10",
@@ -31,6 +33,8 @@
     ]
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "precommit": "lint-staged",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
