@@ -9,7 +9,7 @@ const recentUserSearches = (searches = [], action) => {
         return item.text === action.search;
       });
 
-      if (!alreadySearched) {
+      if (!alreadySearched && action.search.length) {
         if (searches.length === MAX_RECENT_SEARCHES_COUNT) {
           searches.pop();
         }
