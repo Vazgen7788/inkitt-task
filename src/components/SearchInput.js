@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  FormGroup,
-  Input,
-  ListGroup,
-  ListGroupItem
-} from 'reactstrap';
+import { Container, Row, Col, FormGroup, Input } from 'reactstrap';
 import SearchInputDropdown from './SearchInputDropdown';
 import * as keyboardCodes from '../constants/KeyboardNavKeyCodes';
 
 class SearchInput extends Component {
   constructor(props) {
     super(props);
-    this.state = { showAutocomplete: false };
+    this.state = {
+      recent: true,
+      showAutocomplete: false
+    };
 
     this.inputRef = React.createRef();
     this.inputWrapperRef = React.createRef();
 
-    this.handleFocus = this.handleFocus.bind(this);
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
+    this.search = this.search.bind(this);
+    this.toggleRecent = this.toggleRecent.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -33,35 +31,57 @@ class SearchInput extends Component {
     document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
+  toggleAutocomplete(open = true) {
+    this.setState(prevState => {
+      return Object.assign(prevState, {
+        showAutocomplete: open
+      });
+    });
+  }
+
+  open() {
+    this.toggleAutocomplete();
+  }
+
+  close() {
+    this.toggleAutocomplete(false);
+  }
+
   handleClickOutside(event) {
     if (
       this.inputWrapperRef.current &&
       !this.inputWrapperRef.current.contains(event.target)
     ) {
-      this.setState(prevState => {
-        return Object.assign(prevState, {
-          showAutocomplete: false
-        });
-      });
+      this.close();
     }
   }
 
-  handleFocus() {
+  toggleRecent({ open }) {
+    if (open) {
+      this.props.showRecent(this.props.recentSearches);
+    }
+
     this.setState(prevState => {
       return Object.assign(prevState, {
-        showAutocomplete: true
+        recent: open
       });
     });
   }
 
   handleChange() {
     const inputValue = this.inputRef.current.value;
-    this.props.getAutocomplete(inputValue);
+
+    if (inputValue.length > 0) {
+      this.toggleRecent({ open: false });
+      this.props.getAutocomplete(inputValue);
+    } else {
+      this.toggleRecent({ open: true });
+    }
   }
 
   handleKeyUp({ keyCode }) {
     const { UP, DOWN, ENTER } = keyboardCodes;
-    const { markPrev, markNext, search, autocomplete } = this.props;
+    const { markPrev, markNext, autocomplete } = this.props;
 
     switch (keyCode) {
       case UP:
@@ -71,22 +91,25 @@ class SearchInput extends Component {
         markNext(autocomplete);
         break;
       case ENTER:
-        const activeItem = autocomplete.find(item => item.active);
-
-        if (activeItem) {
-          this.inputRef.current.value = activeItem.text;
-        }
-        search(this.inputRef.current.value);
-        document.activeElement.blur();
+        this.search(this.inputRef.current.value);
         break;
       default:
     }
   }
 
+  search(query) {
+    const { search, autocomplete } = this.props;
+    const activeItem = autocomplete.find(item => item.active);
+
+    this.inputRef.current.value = activeItem ? activeItem.text : query;
+    search(this.inputRef.current.value);
+    this.close();
+    document.activeElement.blur();
+  }
+
   render() {
-    const { autocomplete, search } = this.props;
-    const inputEl = this.inputRef.current;
-    const { showAutocomplete } = this.state;
+    const { autocomplete } = this.props;
+    const { showAutocomplete, recent } = this.state;
 
     return (
       <Container>
@@ -95,7 +118,7 @@ class SearchInput extends Component {
             <div ref={this.inputWrapperRef}>
               <FormGroup className="mb-0 search-input-container">
                 <Input
-                  onFocus={this.handleFocus}
+                  onFocus={this.open}
                   onKeyUp={this.handleKeyUp}
                   onChange={this.handleChange}
                   innerRef={this.inputRef}
@@ -104,21 +127,13 @@ class SearchInput extends Component {
                   placeholder="Search"
                 />
 
-                {showAutocomplete &&
-                  inputEl &&
-                  inputEl.value.length === 0 && (
-                    <ListGroup className="autocomplete-container">
-                      <ListGroupItem className="recent-searches-note">
-                        Recent Searches
-                      </ListGroupItem>
-                      <ListGroupItem>Cras justo odio</ListGroupItem>
-                    </ListGroup>
-                  )}
-
-                {showAutocomplete &&
-                  autocomplete.length > 0 && (
-                    <SearchInputDropdown items={autocomplete} search={search} />
-                  )}
+                {showAutocomplete && (
+                  <SearchInputDropdown
+                    recent={recent}
+                    items={autocomplete}
+                    search={this.search}
+                  />
+                )}
               </FormGroup>
             </div>
           </Col>

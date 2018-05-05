@@ -9,6 +9,13 @@ const usersAutocomplete = (autocomplete = [], action) => {
           text: user.fullInfo
         };
       });
+    case types.SET_USERS_AUTOCOMPLETE:
+      return [...action.usersAutocomplete];
+    case types.RESET_USERS_AUTOCOMPLETE_ACTIVE_ITEMS:
+      return autocomplete.map(item => {
+        item.active = false;
+        return item;
+      });
     case types.MARK_USERS_NEXT_AUTOCOMPLETE:
     case types.MARK_USERS_PREV_AUTOCOMPLETE:
       const activeItem = action.usersAutocomplete.find(

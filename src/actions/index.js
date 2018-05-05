@@ -25,6 +25,17 @@ export const searchUsers = query => dispatch => {
       type: types.SEARCH_USERS,
       users: users
     });
+
+    dispatch({
+      type: types.RESET_USERS_AUTOCOMPLETE_ACTIVE_ITEMS
+    });
+
+    if (users.length) {
+      dispatch({
+        type: types.KEEP_USER_SEARCH,
+        search: query
+      });
+    }
   });
 };
 
@@ -35,5 +46,10 @@ export const markUsersNextAutocomplete = usersAutocomplete => ({
 
 export const markUsersPrevAutocomplete = usersAutocomplete => ({
   type: types.MARK_USERS_PREV_AUTOCOMPLETE,
+  usersAutocomplete
+});
+
+export const showRecentUserSearches = usersAutocomplete => ({
+  type: types.SET_USERS_AUTOCOMPLETE,
   usersAutocomplete
 });

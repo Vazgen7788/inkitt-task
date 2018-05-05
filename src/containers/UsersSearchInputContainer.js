@@ -5,14 +5,16 @@ import {
   getUsersAutocomplete,
   markUsersNextAutocomplete,
   markUsersPrevAutocomplete,
-  searchUsers
+  searchUsers,
+  showRecentUserSearches
 } from '../actions';
 
 const UsersSearchInputContainer = props => <SearchInput {...props} />;
 
 const mapStateToProps = state => {
   return {
-    autocomplete: state.usersAutocomplete
+    autocomplete: state.usersAutocomplete,
+    recentSearches: state.recentUserSearches
   };
 };
 
@@ -20,5 +22,6 @@ export default connect(mapStateToProps, {
   getAutocomplete: getUsersAutocomplete,
   markNext: markUsersNextAutocomplete,
   markPrev: markUsersPrevAutocomplete,
-  search: searchUsers
+  search: searchUsers,
+  showRecent: showRecentUserSearches
 })(UsersSearchInputContainer);
