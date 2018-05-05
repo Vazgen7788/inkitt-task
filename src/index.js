@@ -5,7 +5,8 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import reducers from './reducers';
-import App from './components/App';
+import App from './containers/App';
+import { fetchUsers } from './actions';
 import registerServiceWorker from './registerServiceWorker';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -21,5 +22,7 @@ ReactDOM.render(
 	</Provider>,
 	document.getElementById('root')
 );
+
+store.dispatch(fetchUsers());
 
 registerServiceWorker();
