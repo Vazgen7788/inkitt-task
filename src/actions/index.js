@@ -17,9 +17,7 @@ export const fetchUsers = () => dispatch => {
 };
 
 export const getUsersAutocomplete = query => dispatch => {
-  nprogress.start();
   usersApi.searchUsers(query).then(users => {
-    nprogress.done();
     dispatch({
       type: types.GET_USERS_AUTOCOMPLETE,
       users: users.slice(0, 5)

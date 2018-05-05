@@ -3,7 +3,7 @@ import Promise from 'promise';
 import FuzzySearch from 'fuzzy-search';
 
 const FETCH_TIMEOUT = 4000;
-const SEARCH_TIMEOUT = 500;
+const SEARCH_TIMEOUT = 100;
 const COUNT_OF_USERS = 3000;
 const COUNT_TO_DISPLAY = 100;
 const users = [];
