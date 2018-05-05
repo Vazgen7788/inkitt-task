@@ -4,8 +4,11 @@ import UsersTable from '../components/UsersTable';
 
 const UsersTableContainer = props => <UsersTable {...props} />;
 
-const mapStateToProps = ({ users }) => {
-  return { users };
+const mapStateToProps = ({ users: { list, isFetching } }) => {
+  return {
+    users: list,
+    isFetching
+  };
 };
 
 export default connect(mapStateToProps, {})(UsersTableContainer);

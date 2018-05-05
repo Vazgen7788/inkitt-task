@@ -2,7 +2,10 @@ import * as types from '../constants/ActionTypes';
 import * as usersApi from '../api/users';
 
 export const fetchUsers = () => dispatch => {
+  dispatch({ type: types.REQUEST_USERS });
+
   usersApi.fetchUsers().then(users => {
+    dispatch({ type: types.RECEIVE_USERS });
     dispatch({
       type: types.FETCH_USERS,
       users

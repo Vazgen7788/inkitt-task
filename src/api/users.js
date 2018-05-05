@@ -2,7 +2,8 @@ import faker from 'faker';
 import Promise from 'promise';
 import FuzzySearch from 'fuzzy-search';
 
-const TIMEOUT = 20;
+const FETCH_TIMEOUT = 4000;
+const SEARCH_TIMEOUT = 500;
 const COUNT_OF_USERS = 3000;
 const COUNT_TO_DISPLAY = 100;
 const users = [];
@@ -28,7 +29,7 @@ const searcher = new FuzzySearch(users, ['fullInfo'], {
 
 export const fetchUsers = () => {
   return new Promise(resolve => {
-    setTimeout(() => resolve(users.slice(0, COUNT_TO_DISPLAY)), TIMEOUT);
+    setTimeout(() => resolve(users.slice(0, COUNT_TO_DISPLAY)), FETCH_TIMEOUT);
   });
 };
 
@@ -44,6 +45,6 @@ export const searchUsers = query => {
         result = result.splice(0, 100);
       }
       resolve(result);
-    }, TIMEOUT);
+    }, SEARCH_TIMEOUT);
   });
 };

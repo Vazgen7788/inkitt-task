@@ -1,7 +1,22 @@
 import React from 'react';
 import { Container, Col, Table } from 'reactstrap';
 
-const UsersTable = ({ users }) => (
+const TablePlaceholder = ({ rowsCount = 20 }) => {
+  const rows = [];
+  while (rowsCount--) {
+    rows.push(
+      <tr key={rowsCount}>
+        <th className="animated-background" />
+        <td className="animated-background" />
+        <td className="animated-background" />
+        <td className="animated-background" />
+      </tr>
+    );
+  }
+  return rows;
+};
+
+const UsersTable = ({ users, isFetching }) => (
   <Container fluid>
     <Col xs="12">
       <Table className="bg-white" hover bordered responsive>
@@ -14,16 +29,18 @@ const UsersTable = ({ users }) => (
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => {
-            return (
-              <tr key={index}>
-                <th scope="row">{user.id}</th>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.username}</td>
-              </tr>
-            );
-          })}
+          {isFetching && <TablePlaceholder />}
+          {!isFetching &&
+            users.map((user, index) => {
+              return (
+                <tr key={index}>
+                  <th scope="row">{user.id}</th>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.username}</td>
+                </tr>
+              );
+            })}
         </tbody>
       </Table>
     </Col>

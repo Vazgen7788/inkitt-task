@@ -33,7 +33,7 @@ const usersAutocomplete = (autocomplete = [], action) => {
         if (items[activeIndex]) {
           items[activeIndex].active = true;
         }
-      } else {
+      } else if (items.length) {
         if (types.MARK_USERS_NEXT_AUTOCOMPLETE === action.type) {
           items[0].active = true;
         } else {
