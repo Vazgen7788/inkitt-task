@@ -1,11 +1,23 @@
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../../node_modules/nprogress/nprogress.css';
 
 $body-background: #e9ebee;
 $recent-searches-background: #f6f7f9;
 $recent-searches-color: #90949c;
 
+
 body {
   background-color: $body-background;
+}
+
+#nprogress  {
+  .bar {
+    background: $white;
+  }
+  .spinner-icon {
+    border-top-color: $white;
+    border-left-color: $white;
+  }
 }
 
 .search-input-container {
@@ -31,15 +43,6 @@ body {
   }
 }
 
-@keyframes placeHolderShimmer {
-  0% {
-    background-position: -500px 0
-  }
-  100% {
-    background-position: 500px 0
-  }
-}
-
 .animated-background {
   animation-duration: 1s;
   animation-fill-mode: forwards;
@@ -51,4 +54,14 @@ body {
   background-size: 1000px 104px;
   height: 50px;
   position: relative;
+}
+
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -500px 0
+  }
+  100% {
+    background-position: 500px 0
+  }
 }

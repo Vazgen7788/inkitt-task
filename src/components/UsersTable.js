@@ -29,8 +29,9 @@ const UsersTable = ({ users, isFetching }) => (
           </tr>
         </thead>
         <tbody>
-          {isFetching && <TablePlaceholder />}
-          {!isFetching &&
+          {isFetching ? (
+            <TablePlaceholder />
+          ) : (
             users.map((user, index) => {
               return (
                 <tr key={index}>
@@ -40,7 +41,8 @@ const UsersTable = ({ users, isFetching }) => (
                   <td>{user.username}</td>
                 </tr>
               );
-            })}
+            })
+          )}
         </tbody>
       </Table>
     </Col>

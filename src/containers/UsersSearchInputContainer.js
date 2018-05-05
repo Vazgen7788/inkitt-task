@@ -14,7 +14,8 @@ const UsersSearchInputContainer = props => <SearchInput {...props} />;
 const mapStateToProps = state => {
   return {
     autocomplete: state.usersAutocomplete,
-    recentSearches: state.recentUserSearches
+    recentSearches: state.recentUserSearches,
+    disabled: state.users.isFetching
   };
 };
 

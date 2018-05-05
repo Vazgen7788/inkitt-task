@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, FormGroup, Input } from 'reactstrap';
+import _ from 'lodash';
 import SearchInputDropdown from './SearchInputDropdown';
 import * as keyboardCodes from '../constants/KeyboardNavKeyCodes';
 
@@ -39,7 +40,8 @@ class SearchInput extends Component {
     });
   }
 
-  open() {
+  open(event) {
+    event.target.select();
     this.toggleAutocomplete();
   }
 
@@ -108,7 +110,7 @@ class SearchInput extends Component {
   }
 
   render() {
-    const { autocomplete } = this.props;
+    const { autocomplete, disabled } = this.props;
     const { showAutocomplete, recent } = this.state;
 
     return (
@@ -120,8 +122,9 @@ class SearchInput extends Component {
                 <Input
                   onFocus={this.open}
                   onKeyUp={this.handleKeyUp}
-                  onChange={this.handleChange}
+                  onChange={_.debounce(this.handleChange, 500)}
                   innerRef={this.inputRef}
+                  disabled={disabled}
                   type="text"
                   name="query"
                   placeholder="Search"
