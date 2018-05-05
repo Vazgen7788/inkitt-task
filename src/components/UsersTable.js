@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Col, Table } from 'reactstrap';
 
-const UsersTable = () => (
-  <Container fluid >
+const UsersTable = ({ users }) => (
+  <Container fluid>
     <Col xs="12">
       <Table hover bordered>
         <thead>
@@ -14,12 +14,16 @@ const UsersTable = () => (
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
+          {users.map((user, index) => {
+            return (
+              <tr key={index}>
+                <th scope="row">{user.id}</th>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.username}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </Col>
